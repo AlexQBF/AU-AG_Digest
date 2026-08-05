@@ -368,7 +368,7 @@ def trim_to_one_message(header, body, tail):
     """Если header+body+tail не влезает в одно сообщение Telegram,
     отбрасываем пункты с конца (наименее важные — дайджест отсортирован по важности),
     пока не влезет. Пункты разделены пустой строкой и начинаются с 🔸."""
-    LIMIT = 4000  # чуть ниже 4096 для запаса
+    LIMIT = 4096  # реальный лимит Telegram
     def total_len(b):
         return len(header) + len(b) + len(tail)
     if total_len(body) <= LIMIT:
@@ -396,7 +396,7 @@ def send_to_telegram(text):
         print("[!] Нет TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID — вывод в лог:")
         print(text)
         return
-    LIMIT = 3800
+    LIMIT = 4096
     chunks, cur = [], ""
     for line in text.split("\n"):
         while len(line) > LIMIT:
